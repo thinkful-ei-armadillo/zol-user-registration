@@ -31,25 +31,25 @@ describe.only('Users Endpoints', function() {
 
       const requiredFields = ['user_name', 'password', 'full_name']
 
-      requiredFields.forEach(field => {
-        const registerAttemptBody = {
-          user_name: 'test user_name',
-          password: 'test password',
-          full_name: 'test full_name',
-          nickname: 'test nickname',
-        }
+        requiredFields.forEach(field => {
+            const registerAttemptBody = {
+            user_name: 'test user_name',
+            password: 'test password',
+            full_name: 'test full_name',
+            nickname: 'test nickname',
+            }
 
-        it(`responds with 400 required error when '${field}' is missing`, () => {
-          delete registerAttemptBody[field]
+            it(`responds with 400 required error when '${field}' is missing`, () => {
+            delete registerAttemptBody[field]
 
-          return supertest(app)
-            .post('/api/users')
-            .send(registerAttemptBody)
-            .expect(400, {
-              error: `Missing '${field}' in request body`,
+            return supertest(app)
+                .post('/api/users')
+                .send(registerAttemptBody)
+                .expect(400, {
+                error: `Missing '${field}' in request body`,
+                })
             })
         })
-      })
 
         it(`responds 400 'Password be longer than 8 characters' when empty password`, () => {
           const userShortPassword = {
@@ -161,7 +161,7 @@ describe.only('Users Endpoints', function() {
                         expect(row.full_name).to.eql(newUser.full_name)
                         expect(row.nickname).to.eql(null)
                         const expectedDate =  new Date().toLocaleString()
-                        const actualDate = new Date(row.date_created).toLocaleString
+                        const actualDate = new Date(row.date_created).toLocaleString()
                         expect(actualDate).to.eql(expectedDate)
 
                         return bcrypt.compare(newUser.password, row.password)
